@@ -18,6 +18,8 @@ jobs:
   #   steps:
   #     - name: Get repo
   #       uses: actions/checkout@v4
+      - name: Create results/ if not exist
+        run: mkdir -p ${{ github.workspace }}/results
       - name: Test
         run: npm test
 
