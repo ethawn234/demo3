@@ -6,7 +6,7 @@ jobs:
     steps:
       - name: Output GH Context
         run: |
-          echo GH CONTEXT -> "${{ toJSON(github) }}"
+          echo GH CONTEXT "${{ toJSON(github) }}"
       - name: Get code
         uses: actions/checkout@v4
       - name: Install dependencies
