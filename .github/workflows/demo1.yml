@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup_env
     steps:
+      - name: Get repo
+        run: actions/checkout@v4
       - name: Test
         run: npm test --json --outputFile=${{ github.workspace }}/results/test-results.xml
       - name: Create test summary
