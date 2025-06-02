@@ -1,18 +1,33 @@
 name: Events Demo 1
 on: [push, workflow_dispatch]
 jobs:
-  deploy:
+  setup_env:
     runs-on: ubuntu-latest
     steps:
-      - name: Output event data
-        run: echo "${{ toJSON(github.event) }}"
+      - name: Output GH Context
+        run: |
+          echo GH CONTEXT -> "${{ toJSON(github) }}"
       - name: Get code
         uses: actions/checkout@v4
       - name: Install dependencies
         run: npm ci
-      - name: Test code
-        run: npm run test
-      - name: Build code
-        run: npm run build
-      - name: Deploy project
-        run: echo "Deploying..."
+  
+  run_unit_tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: npm test --json --outputFile=${{ github.workspace }}/results/test-results.xml
+      - name: Create test summary
+        uses: test-summary/action@v2.4
+        with:
+          paths: ${{ github.workspace }}/results/*.xml
+          output: ${{ github.workspace }}/results/summary.md
+          show: "all"
+        if: always()
+
+      - name: Add test results to job summary
+        run: |
+          echo "TEST RESULTS:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          cat "${{ github.workspace }}/results/summary.md" >> $GITHUB_STEP_SUMMARY
+        if: always()
