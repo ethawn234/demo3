@@ -38,8 +38,18 @@ jobs:
         run: |
           echo "TEST RESULTS:" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          cat "${{ github.workspace }}/results/summary.md" >> $GITHUB_STEP_SUMMARY
+          if [ -f "${{ github.workspace }}/results/summary.md" ]; then
+            cat "${{ github.workspace }}/results/summary.md" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "_No test results found._" >> $GITHUB_STEP_SUMMARY
+          fi
         if: always()
 
       - name: Echo job summary
         run: echo $GITHUB_STEP_SUMMARY
+
+      - name: Uploaded test summary
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-summary
+          path: ${{ github.workspace }}/results/
