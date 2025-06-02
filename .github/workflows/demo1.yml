@@ -20,6 +20,10 @@ jobs:
   #       uses: actions/checkout@v4
       - name: Test
         run: npm test
+
+      - name: Validate results/ created
+        run: ls -la ${{ github.workspace }}/results || echo "No results found"
+
       - name: Create test summary
         uses: test-summary/action@v2.4
         with:
