@@ -10,7 +10,7 @@ jobs:
       - id: foo
         uses: ethawn234/demo-composite-action@65f074eb7b5fb0ce01006fc6668f08e834610097
         with:
-          who-to-greet: 'Mona the Octocat'
+          who-to-greet: 'Conan the Barbarian'
       - run: echo random-number "$RANDOM_NUMBER"
         shell: bash
         env:
