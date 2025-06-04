@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: foo
-        uses: ethawn234/demo-composite-action@46e3257fa3c8169bd679c070f25b6855015aba1e
+        uses: ethawn234/demo-composite-action@main
         with:
           who-to-greet: 'Conan the Barbarian'
       - run: echo random-number "$RANDOM_NUMBER"
